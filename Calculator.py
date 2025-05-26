@@ -48,7 +48,7 @@ class ScientificCalculator:
         self.buttons_frame.pack(expand=True, fill="both", padx=10, pady=10)
         
     def create_display(self):
-        # Label to display the total expression
+        #\Label to display the total expression
         self.total_expression_label = tk.Label(
             self.display_frame, 
             text="", 
@@ -59,7 +59,7 @@ class ScientificCalculator:
         )
         self.total_expression_label.pack(expand=True, fill="both")
         
-        # Entry to display the current expression
+        #\Entry to display the current expression
         self.current_expression_entry = tk.Entry(
             self.display_frame, 
             font=("Arial", 20, "bold"), 
@@ -87,14 +87,14 @@ class ScientificCalculator:
         self.variables_frame.columnconfigure(1, weight=2)
         self.variables_frame.columnconfigure(2, weight=1)
         
-        # Variable name label
+        #\Variable name label
         tk.Label(self.variables_frame, text="Name:", bg="#f0f0f0").grid(row=0, column=0, sticky="w", padx=5, pady=2)
         
-        # Variable name entry
+        #\Variable name entry
         self.var_name_entry = tk.Entry(self.variables_frame, width=10)
         self.var_name_entry.grid(row=0, column=1, sticky="ew", padx=5, pady=2)
         
-        # Store button
+        #\Store button
         tk.Button(
             self.variables_frame, 
             text="Store", 
@@ -105,7 +105,7 @@ class ScientificCalculator:
             command=self.store_variable
         ).grid(row=0, column=2, sticky="e", padx=5, pady=2)
         
-        # Variables listbox
+        #\Variables listbox
         self.variables_listbox = tk.Listbox(
             self.variables_frame, 
             height=4, 
@@ -120,13 +120,13 @@ class ScientificCalculator:
         self.buttons_frame.columnconfigure(tuple(range(6)), weight=1)
         self.buttons_frame.rowconfigure(tuple(range(5)), weight=1)
 
-        # Define button details: text, row, column, color
+        #\Define button details: text, row, column, color
         button_data = [
-            # Scientific functions row
+            #\Scientific functions row
             ("sin", 0, 0, "#ff9500"), ("cos", 0, 1, "#ff9500"), ("tan", 0, 2, "#ff9500"), 
             ("π", 0, 3, "#ff9500"), ("e", 0, 4, "#ff9500"), ("log", 0, 5, "#ff9500"),
             
-            # Numbers and operations
+            #\Numbers and operations
             ("7", 1, 0, "white"), ("8", 1, 1, "white"), ("9", 1, 2, "white"), 
             ("÷", 1, 3, "#ff9500"), ("√", 1, 4, "#ff9500"), ("x²", 1, 5, "#ff9500"),
             
@@ -140,9 +140,9 @@ class ScientificCalculator:
             ("+", 4, 3, "#ff9500"), ("=", 4, 4, "#4285f4", 2)  # span 2 columns
         ]
 
-        # Create and place buttons
+        #\Create and place buttons
         for data in button_data:
-            if len(data) == 5:  # Button with columnspan
+            if len(data) == 5:
                 text, row, col, color, columnspan = data
                 self.create_button(text, row, col, bg_color=color, columnspan=columnspan)
             else:
@@ -164,16 +164,16 @@ class ScientificCalculator:
         button.grid(row=row, column=col, columnspan=columnspan, sticky="nsew", padx=2, pady=2)
         
     def bind_keys(self):
-        # Bind keyboard inputs
+        #\Bind keyboard inputs
         self.root.bind("<Return>", lambda event: self.evaluate())
         self.root.bind("<BackSpace>", lambda event: self.backspace())
         self.root.bind("<Escape>", lambda event: self.clear())
         
-        # Bind digits and operators
+        #\Bind digits and operators
         for key in "0123456789":
             self.root.bind(key, lambda event, digit=key: self.button_click(digit))
             
-        # Bind operators
+        #\Bind operators
         self.root.bind("+", lambda event: self.button_click("+"))
         self.root.bind("-", lambda event: self.button_click("-"))
         self.root.bind("*", lambda event: self.button_click("×"))
@@ -184,7 +184,7 @@ class ScientificCalculator:
         self.root.bind(")", lambda event: self.button_click(")"))
         
     def button_click(self, text):
-        # Handle different button clicks
+        #\Handle different button clicks
         if text == "=":
             self.evaluate()
         elif text == "AC":
@@ -226,11 +226,11 @@ class ScientificCalculator:
         self.current_expression_entry.insert(0, self.current_expression)
     
     def update_history(self):
-        # Keep only the last 10 calculations
+        #\Keep only the last 10 calculations
         if len(self.history) > 10:
             self.history.pop(0)
         
-        # Update the history listbox
+        #\Update the history listbox
         self.history_listbox.delete(0, tk.END)
         for item in self.history:
             self.history_listbox.insert(tk.END, item)
@@ -274,11 +274,11 @@ class ScientificCalculator:
         self.update_display()
     
     def evaluate_expression(self, expression):
-        # Replace special constants and functions
+        #\Replace special constants and functions
         expression = expression.replace("π", str(math.pi))
         expression = expression.replace("e", str(math.e))
         
-        # Replace custom functions
+        #\Replace custom functions
         expression = expression.replace("sin(", "math.sin(")
         expression = expression.replace("cos(", "math.cos(")
         expression = expression.replace("tan(", "math.tan(")
@@ -288,11 +288,11 @@ class ScientificCalculator:
         expression = expression.replace("×", "*")
         expression = expression.replace("÷", "/")
         
-        # Replace stored variables with their values
+        #\Replace stored variables with their values
         for var_name, value in self.stored_variables.items():
             expression = expression.replace(var_name, str(value))
             
-        # Evaluate the expression
+        # \Evaluate the expression
         try:
             return eval(expression)
         except Exception as e:
@@ -305,22 +305,22 @@ class ScientificCalculator:
         try:
             result = self.evaluate_expression(self.current_expression)
             
-            # Format result for display (reduce excessive decimal places)
+            #\Format result for display
             if isinstance(result, float):
                 if result.is_integer():
                     result = int(result)
                 else:
-                    # Limit to 10 decimal places if needed
+                    #\Limit to 10 decimal places if needed
                     result = round(result, 10)
-                    # Remove trailing zeros
+                    #\Remove extra zeros
                     result = str(result).rstrip('0').rstrip('.') if '.' in str(result) else str(result)
             
-            # Add to history
+            #\Add to history
             history_item = f"{self.current_expression} = {result}"
             self.history.append(history_item)
             self.update_history()
             
-            # Update display
+            #\Update display
             self.total_expression = self.current_expression
             self.current_expression = str(result)
             self.update_display()
