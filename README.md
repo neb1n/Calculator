@@ -28,7 +28,7 @@ This project uses only built-in Python libraries (`tkinter` and `math`), so no e
 Clone the repository or download the script:
 
 ```bash
-git clone https://github.com/your-username/scientific-calculator.git
+git clone https://github.com/neb1n/scientific-calculator.git
 cd scientific-calculator
 ```
 
