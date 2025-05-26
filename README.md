@@ -19,7 +19,7 @@ A powerful scientific calculator built with Python using the `tkinter` module. T
 
 ## 📦 Requirements
 
-- Python 3.x
+- Python 3.9+
 
 This project uses only built-in Python libraries (`tkinter` and `math`), so no external packages are required.
 
